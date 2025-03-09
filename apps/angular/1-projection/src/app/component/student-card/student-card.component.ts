@@ -12,10 +12,7 @@ import { CardComponent } from '../../ui/card/card.component';
 @Component({
   selector: 'app-student-card',
   template: `
-    <app-card
-      [list]="students()"
-      [type]="cardType"
-      customClass="bg-light-green" />
+    <app-card [list]="students()" customClass="bg-light-green" />
   `,
   styles: [
     `
