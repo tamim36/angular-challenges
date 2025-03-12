@@ -3,6 +3,7 @@ import {
   Component,
   effect,
   model,
+  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -39,12 +40,21 @@ export class AppComponent {
   ram = model(false);
   gpu = model(false);
 
+  isDriveCheck = signal(false);
+  isRamCheck = signal(false);
+  isGpuCheck = signal(false);
+
   constructor() {
-    /* 
-      Explain for your junior team mate why this bug occurs ...
-    */
     effect(() => {
-      if (this.drive() || this.ram() || this.gpu()) {
+      const checked =
+        (!this.isDriveCheck() && this.drive()) ||
+        (!this.isRamCheck() && this.ram()) ||
+        (!this.isGpuCheck() && this.gpu());
+      this.isDriveCheck.set(this.drive());
+      this.isRamCheck.set(this.ram());
+      this.isGpuCheck.set(this.gpu());
+
+      if (checked) {
         alert('Price increased!');
       }
     });
