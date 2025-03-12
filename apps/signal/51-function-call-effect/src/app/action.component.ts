@@ -3,6 +3,7 @@ import {
   Component,
   effect,
   inject,
+  input,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ import { UserService } from './user.service';
       <select
         name="actions"
         [(ngModel)]="action"
+        (change)="logAction()"
         id="actions"
         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
         <option selected>Please select an action</option>
@@ -31,14 +33,23 @@ import { UserService } from './user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActionsComponent {
+  curUser = input.required<string>();
   private userService = inject(UserService);
   protected action = signal(undefined);
 
   protected actions = ['Create', 'Read', 'Update', 'Delete'];
 
+  logAction() {
+    //console.log("value is changed");
+    this.userService.name.set(this.curUser());
+    this.userService.log(this.action() ?? 'No action selected');
+  }
+
   constructor() {
     effect(() => {
-      this.userService.log(this.action() ?? 'No action selected');
+      // console.log("Action effect ...", this.curUser());
+      // this.userService.name.set(this.curUser());
+      // this.userService.log(this.action() ?? 'No action selected');
     });
   }
 }
