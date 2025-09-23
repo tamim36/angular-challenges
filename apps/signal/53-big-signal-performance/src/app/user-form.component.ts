@@ -64,36 +64,32 @@ export class UserFormComponent {
   userStore = inject(UserStore);
 
   form = new FormGroup({
-    name: new FormControl(this.userStore.user().name, { nonNullable: true }),
-    street: new FormControl(this.userStore.user().address.street, {
+    name: new FormControl(this.userStore.userName(), { nonNullable: true }),
+    street: new FormControl(this.userStore.userAddressStreet(), {
       nonNullable: true,
     }),
-    zipCode: new FormControl(this.userStore.user().address.zipCode, {
+    zipCode: new FormControl(this.userStore.userAddressZipCode(), {
       nonNullable: true,
     }),
-    city: new FormControl(this.userStore.user().address.city, {
+    city: new FormControl(this.userStore.userAddressCity(), {
       nonNullable: true,
     }),
-    note: new FormControl(this.userStore.user().note, { nonNullable: true }),
-    title: new FormControl(this.userStore.user().title, { nonNullable: true }),
-    salary: new FormControl(this.userStore.user().salary, {
+    note: new FormControl(this.userStore.userNote(), { nonNullable: true }),
+    title: new FormControl(this.userStore.userTitle(), { nonNullable: true }),
+    salary: new FormControl(this.userStore.userSalary(), {
       nonNullable: true,
     }),
   });
 
   submit() {
-    this.userStore.user.update((u) => ({
-      ...u,
-      name: this.form.getRawValue().name,
-      address: {
-        ...u.address,
-        street: this.form.getRawValue().street,
-        zipCode: this.form.getRawValue().zipCode,
-        city: this.form.getRawValue().city,
-      },
-      note: this.form.getRawValue().note,
-      title: this.form.getRawValue().title,
-      salary: this.form.getRawValue().salary,
-    }));
+    const formValue = this.form.getRawValue();
+
+    this.userStore.userName.set(formValue.name);
+    this.userStore.userAddressStreet.set(formValue.street);
+    this.userStore.userAddressZipCode.set(formValue.zipCode);
+    this.userStore.userAddressCity.set(formValue.city);
+    this.userStore.userNote.set(formValue.note);
+    this.userStore.userTitle.set(formValue.title);
+    this.userStore.userSalary.set(formValue.salary);
   }
 }
