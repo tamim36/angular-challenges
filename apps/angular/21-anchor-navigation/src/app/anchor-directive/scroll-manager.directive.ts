@@ -19,6 +19,7 @@ export class ScrollManagerDirective {
   }
 
   register(section: ScrollSectionDirective) {
+    console.log('register', section.id(), section);
     this.sections.set(section.id(), section);
   }
 

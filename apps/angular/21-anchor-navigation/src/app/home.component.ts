@@ -1,18 +1,23 @@
 import { Component } from '@angular/core';
-import { NavButtonComponent } from './nav-button.component';
+import { AnchorButtonDirective } from './anchor-directive/anchor-button.directive';
+import { ScrollManagerDirective } from './anchor-directive/scroll-manager.directive';
+import { ScrollSectionDirective } from './anchor-directive/scroll-section.directive';
+import { NavButtonDirective } from './nav-button.component';
 
 @Component({
-  imports: [NavButtonComponent],
+  imports: [NavButtonDirective, ScrollSectionDirective, AnchorButtonDirective],
   selector: 'app-home',
+  standalone: true,
+  hostDirectives: [ScrollManagerDirective],
   template: `
-    <nav-button href="/foo" class="fixed left-1/2 top-3">Foo Page</nav-button>
-    <div id="top" class="h-screen bg-gray-500">
+    <button navButton="/foo" class="fixed left-1/2 top-3">Foo Page</button>
+    <div scrollSection="top" class="h-screen bg-gray-500">
       Empty
-      <nav-button href="#bottom">Scroll Bottom</nav-button>
+      <button anchorButton="bottom">Scroll Bottom</button>
     </div>
-    <div id="bottom" class="h-screen bg-blue-300">
+    <div scrollSection="bottom" class="h-screen bg-blue-300">
       I want to scroll each
-      <nav-button href="#top">Scroll Top</nav-button>
+      <button anchorButton="top">Scroll Top</button>
     </div>
   `,
 })
