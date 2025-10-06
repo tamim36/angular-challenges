@@ -8,6 +8,10 @@ import { ScrollSectionDirective } from './scroll-section.directive';
 export class ScrollManagerDirective {
   private sections = new Map<string, ScrollSectionDirective>();
 
+  constructor() {
+    console.log('ScrollManagerDirective instantiated');
+  }
+
   scroll(id: string) {
     if (!this.sections.has(id)) {
       throw new Error(

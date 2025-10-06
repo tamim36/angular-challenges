@@ -1,10 +1,14 @@
 import { Directive } from '@angular/core';
 import { ScrollAnchorDirective } from './scroll-anchor.directive';
+import { ScrollManagerDirective } from './scroll-manager.directive';
 
 @Directive({
   selector: '[anchorButton]',
   standalone: true,
   hostDirectives: [
+    {
+      directive: ScrollManagerDirective,
+    },
     {
       directive: ScrollAnchorDirective,
       inputs: ['scrollAnchor:anchorButton'],
